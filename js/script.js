@@ -54,9 +54,14 @@ const printQuote = () => {
     <p class="source">${source}
   `;
 
-  // add citation and year if either exist
+  // add citation, year, and tags if exist
   if (citation) innerHTML += `<span class="citation">${citation}</span>`;
   if (year) innerHTML += `<span class="year">${year}</span>`;
+  if (tags) {
+    let as = '';
+    tags.forEach(t => as += `<a class="tag" href='#'>${t}</a>`);
+    innerHTML += `<span> ${as}</span>`;
+  }
 
   // close p tag
   innerHTML += '</p>';
