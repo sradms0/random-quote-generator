@@ -3,7 +3,7 @@ const quotes = [
     quote : 'Existence precedes essence.', 
     source : 'Jean-Paul Sartre',
     citation : 'Existentialism is a Humanism',
-    date : 1946,
+    year : 1946,
     tags : ['wisdom', 'life', 'philosophy']
   },
 
@@ -11,7 +11,7 @@ const quotes = [
     quote : 'I think, therefore I am.', 
     source : 'René Descartes',
     citation : 'Discourse on the Method',
-    date : 1637,
+    year : 1637,
     tags : ['life', 'philosophy']
   },
 
@@ -37,6 +37,32 @@ const quotes = [
 const getRandomQuote = () => {
   const randIdx = Math.floor(Math.random()*quotes.length);
   return quotes[randIdx];
+}
+
+const printQuote = () => {
+  const { 
+    quote, 
+    source, 
+    citation, 
+    year, 
+    tags 
+  } = getRandomQuote();
+
+  // being building html string
+  let innerHTML = `
+    <p class="quote">${quote}</p>
+    <p class="source">${source}
+  `;
+
+  // add citation and year if either exist
+  if (citation) innerHTML += `<span class="citation">${citation}</span>`;
+  if (year) innerHTML += `<span class="year">${year}</span>`;
+
+  // close p tag
+  innerHTML += '</p>';
+
+  // add quote to dom
+  document.getElementById('quote-box').innerHTML = innerHTML;
 }
 
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
