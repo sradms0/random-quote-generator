@@ -65,5 +65,6 @@ const printQuote = () => {
   document.getElementById('quote-box').innerHTML = innerHTML;
 }
 
+printQuote();
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
