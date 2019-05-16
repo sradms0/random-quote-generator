@@ -32,7 +32,12 @@ const quotes = [
     source : 'Marcus Tullius Cicero',
     tags : ['books', 'similie', 'soul']
   }
-]
+];
+
+const getRandomQuote = () => {
+  const randIdx = Math.floor(Math.random()*quotes.length);
+  return quotes[randIdx];
+}
 
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
