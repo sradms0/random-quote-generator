@@ -34,6 +34,20 @@ const quotes = [
   }
 ];
 
+const colors = [
+  '#483c46',
+  '#3c6e71',
+  '#70ae6e',
+  '#e6d246',
+  '#f4743b'
+];
+
+const setBackgroundColor = () => {
+  const randIdx = Math.floor(Math.random()*colors.length);
+  const color = colors[randIdx];
+  document.body.style.background = color;
+}
+
 const getRandomQuote = () => {
   const randIdx = Math.floor(Math.random()*quotes.length);
   return quotes[randIdx];
@@ -68,6 +82,8 @@ const printQuote = () => {
 
   // add quote to dom
   document.getElementById('quote-box').innerHTML = innerHTML;
+
+  setBackgroundColor();
 }
 
 printQuote();
