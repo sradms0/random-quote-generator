@@ -44,6 +44,8 @@ const colors = [
 
 let timer;
 
+const randIdx = arr => Math.floor(Math.random()*arr.length);
+
 const setTimer = () => {
   printQuote();
   clearInterval(timer);
@@ -51,14 +53,12 @@ const setTimer = () => {
 }
 
 const setBackgroundColor = () => {
-  const randIdx = Math.floor(Math.random()*colors.length);
-  const color = colors[randIdx];
+  const color = colors[randIdx(colors)];
   document.body.style.background = color;
 }
 
 const getRandomQuote = () => {
-  const randIdx = Math.floor(Math.random()*quotes.length);
-  return quotes[randIdx];
+  return quotes[randIdx(quotes)];
 }
 
 const printQuote = () => {
