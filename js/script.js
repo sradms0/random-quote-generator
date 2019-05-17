@@ -67,34 +67,43 @@ const getRandomQuote = () => {
 
 const printQuote = () => {
   // set quote, but check equality for very last quote selected  
-  let quote = getRandomQuote();
-  while (quote === lastQuote) quote = getRandomQuote();
+  let randomQuote = getRandomQuote();
+  while (randomQuote === lastQuote) randomQuote = getRandomQuote();
 
   // find idx of quote that was selected, move quote to past quote
-  const idx = quotes.map(q => q.quote).indexOf(quote.quote);
+  const idx = quotes.map(q => q.quote).indexOf(randomQuote.quote);
   quotes = [...quotes.slice(0, idx), ...quotes.slice(idx+1)];
-  pastQuotes.push(quote);
+  pastQuotes.push(randomQuote);
 
   // reset quotes and clear pastQuotes, if all have been selected
   // set very last quote to curr quote to avoid repeat after reset
   if (!quotes.length) {
     quotes = [...pastQuotes];
     pastQuotes = [];
-    lastQuote = quote;
+    lastQuote = randomQuote;
   } else lastQuote = null;
+
+  const {
+    quote,
+    source,
+    citation,
+    year,
+    tags
+  } = randomQuote;
 
   // being building html string
   let innerHTML = `
-    <p class="quote">${quote.quote}</p>
-    <p class="source">${quote.source}
+    <p class="quote">${quote}</p>
+    <p class="source">${source}
   `;
 
+
   // add citation, year, and tags if exist
-  if (quote.citation) innerHTML += `<span class="citation">${quote.citation}</span>`;
-  if (quote.year) innerHTML += `<span class="year">${quote.year}</span>`;
-  if (quote.tags) {
+  if (citation) innerHTML += `<span class="citation">${citation}</span>`;
+  if (year) innerHTML += `<span class="year">${year}</span>`;
+  if (tags) {
     let as = '';
-    quote.tags.forEach(t => as += `<a class="tag" href='#'>${t}</a>`);
+    tags.forEach(t => as += `<a class="tag" href='#'>${t}</a>`);
     innerHTML += `<span> ${as}</span>`;
   }
 
