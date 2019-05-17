@@ -1,4 +1,4 @@
-const quotes = [
+let quotes = [
   {
     quote : 'Existence precedes essence.', 
     source : 'Jean-Paul Sartre',
@@ -44,6 +44,10 @@ const colors = [
 
 let timer;
 
+let lastQuote;
+
+let pastQuotes = [];
+
 const randIdx = arr => Math.floor(Math.random()*arr.length);
 
 const setTimer = () => {
@@ -62,26 +66,35 @@ const getRandomQuote = () => {
 }
 
 const printQuote = () => {
-  const { 
-    quote, 
-    source, 
-    citation, 
-    year, 
-    tags 
-  } = getRandomQuote();
+  // set quote, but check equality for very last quote selected  
+  let quote = getRandomQuote();
+  while (quote === lastQuote) quote = getRandomQuote();
+
+  // find idx of quote that was selected, move quote to past quote
+  const idx = quotes.map(q => q.quote).indexOf(quote.quote);
+  quotes = [...quotes.slice(0, idx), ...quotes.slice(idx+1)];
+  pastQuotes.push(quote);
+
+  // reset quotes and clear pastQuotes, if all have been selected
+  // set very last quote to curr quote to avoid repeat after reset
+  if (!quotes.length) {
+    quotes = [...pastQuotes];
+    pastQuotes = [];
+    lastQuote = quote;
+  } else lastQuote = null;
 
   // being building html string
   let innerHTML = `
-    <p class="quote">${quote}</p>
-    <p class="source">${source}
+    <p class="quote">${quote.quote}</p>
+    <p class="source">${quote.source}
   `;
 
   // add citation, year, and tags if exist
-  if (citation) innerHTML += `<span class="citation">${citation}</span>`;
-  if (year) innerHTML += `<span class="year">${year}</span>`;
-  if (tags) {
+  if (quote.citation) innerHTML += `<span class="citation">${quote.citation}</span>`;
+  if (quote.year) innerHTML += `<span class="year">${quote.year}</span>`;
+  if (quote.tags) {
     let as = '';
-    tags.forEach(t => as += `<a class="tag" href='#'>${t}</a>`);
+    quote.tags.forEach(t => as += `<a class="tag" href='#'>${t}</a>`);
     innerHTML += `<span> ${as}</span>`;
   }
 
