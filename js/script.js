@@ -42,6 +42,14 @@ const colors = [
   '#f4743b'
 ];
 
+let timer;
+
+const setTimer = () => {
+  printQuote();
+  clearInterval(timer);
+  timer = setInterval(printQuote, 5000);
+}
+
 const setBackgroundColor = () => {
   const randIdx = Math.floor(Math.random()*colors.length);
   const color = colors[randIdx];
@@ -86,6 +94,7 @@ const printQuote = () => {
   setBackgroundColor();
 }
 
-printQuote();
-document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+// begin timer on page-load
+setTimer();
 
+document.getElementById('loadQuote').addEventListener("click", setTimer, false);
